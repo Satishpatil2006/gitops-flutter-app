@@ -14,7 +14,6 @@ spec:
     spec:
       containers:
         - name: flutter-app
-          image:satpatil75/ gitops-flutter-app:v2
-          imagePullPolicy: Never
+          image: satpatil75/gitops-flutter-app:v2
           ports:
             - containerPort: 80

@@ -1,6 +1,5 @@
 apiVersion: apps/v1
 kind: Deployment
-
 metadata:
   name: gitops-flutter-app
   labels:
@@ -21,9 +20,7 @@ spec:
     spec:
       containers:
         - name: flutter-app
-
-          image: satpatil75/gitops-flutter-app:v3
-
+          image: satpatil75/gitops-flutter-app:v2
           imagePullPolicy: Always
 
           ports:
@@ -37,17 +34,3 @@ spec:
             limits:
               memory: "256Mi"
               cpu: "250m"
-
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 80
-            initialDelaySeconds: 5
-            periodSeconds: 10
-
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 80
-            initialDelaySeconds: 15
-            periodSeconds: 20

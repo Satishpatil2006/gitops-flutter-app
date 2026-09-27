@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Get project code
+      # 1. Checkout project
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -21,7 +21,7 @@ jobs:
           flutter-version: '3.47.5'
           channel: stable
 
-      # 3. Install Flutter dependencies
+      # 3. Install dependencies
       - name: Install dependencies
         run: flutter pub get
 
@@ -36,14 +36,26 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # 6. Build Docker image
-      - name: Build Docker image
+      # 6. Build latest image
+      - name: Build latest Docker image
         run: |
           docker build \
             -t ${{ secrets.DOCKERHUB_USERNAME }}/gitops-flutter-app:latest .
 
-      # 7. Push Docker image to Docker Hub
-      - name: Push Docker image
+      # 7. Build version 2 image
+      - name: Build v2 Docker image
+        run: |
+          docker build \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/gitops-flutter-app:v2 .
+
+      # 8. Push latest image
+      - name: Push latest Docker image
         run: |
           docker push \
             ${{ secrets.DOCKERHUB_USERNAME }}/gitops-flutter-app:latest
+
+      # 9. Push v2 image
+      - name: Push v2 Docker image
+        run: |
+          docker push \
+            ${{ secrets.DOCKERHUB_USERNAME }}/gitops-flutter-app:v2
